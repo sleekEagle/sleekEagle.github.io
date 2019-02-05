@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Introduction to Reinforcement Learning
-permalink: /topics/RL/
+permalink: /topics/RL/rl
 exclude: true
 ---
 
