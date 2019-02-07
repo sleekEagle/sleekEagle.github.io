@@ -12,6 +12,8 @@ This is where I add various topics that might be of interest!!
 
 [Fairy Rings](../topics/Nature/)
 
+[Predicting Emotions with Audio Data and Deep Neural Networks](../topics/NN/classify_emotions)
+
 
 
 
