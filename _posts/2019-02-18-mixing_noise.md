@@ -19,7 +19,7 @@ The following are the signal and the real world noise I used to mix with it.
 [signal ("leave my dog alone!")](/audio/mixing_noise/signal.wav)\\
 [noise ("running water")](/audio/mixing_noise/noise.wav)
 
-# Signal mixzed with noise at various SNR
+# Signal mized with noise at various SNR
 [SNR=30](/audio/mixing_noise/signal_noise_SNR=30.wav)\\
 [SNR=20](/audio/mixing_noise/signal_noise_SNR=20.wav)\\
 [SNR=15](/audio/mixing_noise/signal_noise_SNR=15.wav)\\
