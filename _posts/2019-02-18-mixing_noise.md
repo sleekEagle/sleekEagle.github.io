@@ -20,16 +20,16 @@ The following are the signal and the real world noise I used to mix with it.
 [noise ("running water")](/audio/mixing_noise/noise.wav)
 
 # Signal mized with noise at various SNR
-[SNR=30](/audio/mixing_noise/signal_noise_SNR=30.wav)\\
-[SNR=20](/audio/mixing_noise/signal_noise_SNR=20.wav)\\
-[SNR=15](/audio/mixing_noise/signal_noise_SNR=15.wav)\\
-[SNR=10](/audio/mixing_noise/signal_noise_SNR=10.wav)\\
-[SNR=5](/audio/mixing_noise/signal_noise_SNR=5.wav)\\
+[SNR=15](/audio/mixing_noise/signal_noise_SNR=30.wav)\\
+[SNR=10](/audio/mixing_noise/signal_noise_SNR=20.wav)\\
+[SNR=7.5](/audio/mixing_noise/signal_noise_SNR=15.wav)\\
+[SNR=5](/audio/mixing_noise/signal_noise_SNR=10.wav)\\
+[SNR=2.5](/audio/mixing_noise/signal_noise_SNR=5.wav)\\
 [SNR=0](/audio/mixing_noise/signal_noise_SNR=0.wav)\\
-[SNR=-5](/audio/mixing_noise/signal_noise_SNR=-5.wav)\\
-[SNR=-10](/audio/mixing_noise/signal_noise_SNR=-10.wav)\\
-[SNR=-20](/audio/mixing_noise/signal_noise_SNR=-20.wav)\\
-[SNR=-30](/audio/mixing_noise/signal_noise_SNR=-30.wav)
+[SNR=-2.5](/audio/mixing_noise/signal_noise_SNR=-5.wav)\\
+[SNR=-5](/audio/mixing_noise/signal_noise_SNR=-10.wav)\\
+[SNR=-10](/audio/mixing_noise/signal_noise_SNR=-20.wav)\\
+[SNR=-15](/audio/mixing_noise/signal_noise_SNR=-30.wav)
 
 
 We can see how the quality of the signal degrades with decreasing SNR.
