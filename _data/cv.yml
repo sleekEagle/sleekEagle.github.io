@@ -1,0 +1,176 @@
+cv:
+  name: Lahiru Wijayasingha
+  label: Machine Learning Researcher · Computer Vision & Multimodal AI
+  email: xlahirunuwan@gmail.com
+  website: https://sleekeagle.github.io
+  summary: >-
+    Computer vision and multimodal deep learning, with a focus on monocular depth estimation, camera-independent 3D
+    perception, and egocentric/wearable sensing. Broader interests include applying vision and multimodal ML to
+    healthcare, human activity recognition, and assistive systems.
+
+  social_networks:
+    - network: GitHub
+      username: sleekEagle
+    - network: LinkedIn
+      username: lahiru-nuwan
+
+  sections:
+    Education:
+      - institution: University of Virginia
+        location: Charlottesville, VA, USA
+        area: Computer Science
+        studyType: PhD
+        start_date: 2017
+        end_date: 2024
+
+      - institution: Imperial College London
+        location: London, UK
+        area: Medical Robotics and Image Guided Intervention
+        studyType: MS
+        start_date: 2015
+        end_date: 2016
+        highlights:
+          - Faculty of Medicine Dean's Prize, awarded to the top student of the program.
+
+      - institution: University of Moratuwa
+        location: Sri Lanka
+        area: Mechanical Engineering
+        studyType: BSc
+        start_date: 2009
+        end_date: 2014
+
+    Experience:
+      - company: Independent
+        position: Independent Researcher
+        start_date: 2026-01
+        end_date: 2026-09
+        highlights:
+          - Developing an explainable AI method for video classification models based on sufficient input subsets, isolating the minimal input frames that drive a model's decision (manuscript under review, WACV 2027).
+
+      - company: University of Iowa
+        position: Research Scholar
+        location: Iowa, USA
+        start_date: 2024-06
+        end_date: 2025-11
+        highlights:
+          - Labelled a dataset and built a spatio-temporal **multimodal deep learning** framework for echocardiogram classification, integrating clinical data with video sequences to improve detection of Takotsubo cardiomyopathy.
+          - Scheduled GPU-heavy training on an SGE-based **high-performance cluster** using **CUDA** and **PyTorch**.
+
+      - company: University of Virginia
+        position: PhD Researcher
+        location: Charlottesville, VA, USA
+        start_date: 2017-08
+        end_date: 2024-05
+        highlights:
+          - Developed a novel **single-image depth estimation** method exploiting defocus blur, generalizing across camera settings and outperforming prior state of the art on cross-camera evaluation.
+          - Designed CNN-based techniques for **noise-robust audio emotion recognition**, validated across multiple public benchmark datasets.
+          - Formulated a few-shot learning method for **wearable-sensor human activity recognition**, outperforming existing approaches on three public datasets.
+          - Co-designed and deployed an in-home care system for Alzheimer's patients and caregivers; built the **AWS-based real-time data pipeline** and a Slack-based alerting system for the care team.
+          - Led design and **data collection** for a multimodal (video, IMU, audio) CPR performance dataset across 23 participants.
+          - Trained models on a Slurm-based HPC cluster with CUDA, **PyTorch**, **Keras**, **OpenCV** and MATLAB.
+
+      - company: Elder Research
+        position: Machine Learning Intern
+        location: USA
+        start_date: 2021-08
+        end_date: 2021-12
+        highlights:
+          - Explored **neural differential equation** solving in **Julia** for modeling space object dynamics; programmed **C** libraries to extract training data from NASA's SPICE toolkit.
+          - Developed and validated a neural differential equation solver for space object positioning and communicated the results to the team.
+
+      - company: CodeGen Sri Lanka
+        position: Data Science Engineer
+        location: Sri Lanka
+        start_date: 2017-01
+        end_date: 2017-09
+        highlights:
+          - Built a two-tiered **image classification** system for customer preference analysis, a Naïve Bayes filter with over 90% accuracy on cartoon images followed by a **CNN** (Caffe).
+          - Developed customer demand prediction models from historical and weather data, comparing **LSTM, random forest and XGBoost** and selecting LSTM.
+          - Prototyped an **ALS**-based recommender for personalized suggestions.
+
+      - company: Imperial College London
+        position: Research-based MS Student
+        location: London, UK
+        start_date: 2015-09
+        end_date: 2016-10
+        highlights:
+          - Built **Naïve Bayes** classifiers for real-time hand motion classification from smartwatch data, with companion **Android apps**; led a seven-participant study on tooth brushing and hand washing.
+
+    Publications:
+      - title: Camera-Independent Single Image Depth Estimation from Defocus Blur
+        publisher: WACV 2024 · Wijayasingha L., Alemzadeh H., Stankovic J.
+        releaseDate: 2024
+        url: https://openaccess.thecvf.com/content/WACV2024/html/Wijayasingha_Camera-Independent_Single_Image_Depth_Estimation_From_Defocus_Blur_WACV_2024_paper.html
+
+      - title: Generalized Few-Shot Learning for Wearable Sensor-based Human Activity Recognition
+        publisher: IEEE PerCom Workshops 2022 · Wijayasingha L., Stankovic J.
+        releaseDate: 2022
+
+      - title: Robustness to Noise for Speech Emotion Classification using CNNs and Attention Mechanisms
+        publisher: Smart Health 2021 · Wijayasingha L., Stankovic J.
+        releaseDate: 2021
+
+      - title: A Wearable Sensing Framework for Improving Personal and Oral Hygiene for People with Developmental Disabilities
+        publisher: IEEE Wireless Health 2016 · Wijayasingha L., Lo B.
+        releaseDate: 2016
+        url: https://doi.org/10.1109/WH.2016.7764550
+
+      - title: "EgoEMS: A High-Fidelity Multimodal Egocentric Dataset for Cognitive Assistance in Emergency Medical Services"
+        publisher: AAAI 2026 · co-author
+        releaseDate: 2026
+        url: https://doi.org/10.1609/aaai.v40i46.41293
+
+      - title: "EgoCap and EgoFormer: First-person Image Captioning with Context Fusion"
+        publisher: Pattern Recognition Letters 2024 · co-author
+        releaseDate: 2024
+        url: https://doi.org/10.1016/j.patrec.2024.03.012
+
+    Skills:
+      - name: Languages
+        icon: fa-solid fa-code
+        keywords: "Python, C, Julia, MATLAB, Assembly"
+      - name: Deep learning & ML
+        icon: fa-solid fa-brain
+        keywords: "PyTorch, CUDA, Keras, Caffe, OpenCV, XGBoost"
+      - name: Domains
+        icon: fa-solid fa-eye
+        keywords: "Video understanding, monocular depth estimation, multimodal fusion, audio classification, human activity recognition, explainable AI"
+      - name: Infrastructure
+        icon: fa-solid fa-server
+        keywords: "AWS real-time data pipelines, Slurm and SGE GPU clusters, Android apps"
+
+    Teaching:
+      - bullet: "**University of Virginia, Teaching Assistant (2017–2023).** Wireless for the Internet of Things (Spring 2023: BLE, IEEE 802.15.4, Wi-Fi, cellular, LoRa); Computer Architecture (Fall 2018, Spring 2019); Internet of Trillion of Things (Fall 2018)."
+      - bullet: "**University of Moratuwa, Temporary Lecturer (2015).** Sections of a module on mechanical properties of materials."
+
+    Academic Service:
+      - label: Peer review
+        details: "CVPR 2027 (2), NeurIPS 2027 (3), IEEE Signal Processing Letters 2024 (1), ICPR 2024 (4), Nature Scientific Reports 2024 (1), Smart Health 2021 (1)"
+
+    Leadership:
+      - bullet: "**President, UVA Link Lab Student Committee (2020–2022).** Organized social events, hikes and sports for ~200 graduate students and grew the committee from two to eight members. Received the Link Lab Outstanding Graduate Student Service Award."
+      - bullet: "**Volunteer, UVA Hospital gift shop (2018–2019).**"
+
+    Awards:
+      - title: University of Virginia Computer Science Fellowship
+        date: 2017-08
+        awarder: University of Virginia
+
+      - title: Faculty of Medicine Dean's Prize
+        date: 2016-09
+        awarder: Imperial College London
+        summary: Awarded to the top student of the program.
+
+      - title: Outstanding Graduate Student Service Award
+        awarder: UVA Link Lab
+
+    Certificates:
+      - name: Machine Learning in Production
+        issuer: DeepLearning.AI
+        date: 2026
+        icon: fa-solid fa-certificate
+
+      - name: Retrieval Augmented Generation (RAG)
+        issuer: DeepLearning.AI
+        date: 2026-10
+        icon: fa-solid fa-certificate

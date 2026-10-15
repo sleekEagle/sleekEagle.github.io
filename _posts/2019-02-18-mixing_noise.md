@@ -1,6 +1,10 @@
 ---
 layout: post
 title: Adding noise to audio data
+date: 2019-02-18
+description: Mixing white and real-world noise into audio clips at a chosen SNR, with examples you can listen to.
+tags: [audio, machine-learning]
+categories: [articles]
 ---
 
 Some times we need to add noise to audio data. One examples is when we ealuate machine learning models 
@@ -16,25 +20,56 @@ Here I talk about adding two types of noises.
 
 The following are the signal and the real world noise I used to mix with it.
 
-[signal ("leave my dog alone!")](/audio/mixing_noise/signal.wav)\\
-[noise ("running water")](/audio/mixing_noise/noise.wav)
+**signal ("leave my dog alone!")**
 
-# Signal mized with noise at various SNR
-[SNR=15](/audio/mixing_noise/signal_noise_SNR=30.wav)\\
-[SNR=10](/audio/mixing_noise/signal_noise_SNR=20.wav)\\
-[SNR=7.5](/audio/mixing_noise/signal_noise_SNR=15.wav)\\
-[SNR=5](/audio/mixing_noise/signal_noise_SNR=10.wav)\\
-[SNR=2.5](/audio/mixing_noise/signal_noise_SNR=5.wav)\\
-[SNR=0](/audio/mixing_noise/signal_noise_SNR=0.wav)\\
-[SNR=-2.5](/audio/mixing_noise/signal_noise_SNR=-5.wav)\\
-[SNR=-5](/audio/mixing_noise/signal_noise_SNR=-10.wav)\\
-[SNR=-10](/audio/mixing_noise/signal_noise_SNR=-20.wav)\\
-[SNR=-15](/audio/mixing_noise/signal_noise_SNR=-30.wav)
+{% include audio.liquid path="assets/audio/mixing_noise/signal.wav" controls=true %}
+\
+**noise ("running water")**
+
+{% include audio.liquid path="assets/audio/mixing_noise/noise.wav" controls=true %}
+
+
+# Signal mixed with noise at various SNR
+**SNR=30**
+
+{% include audio.liquid path="assets/audio/mixing_noise/signal_noise_SNR=30.wav" controls=true %}
+\
+**SNR=20**
+
+{% include audio.liquid path="assets/audio/mixing_noise/signal_noise_SNR=20.wav" controls=true %}
+\
+**SNR=15**
+
+{% include audio.liquid path="assets/audio/mixing_noise/signal_noise_SNR=15.wav" controls=true %}
+\
+**SNR=10**
+
+{% include audio.liquid path="assets/audio/mixing_noise/signal_noise_SNR=10.wav" controls=true %}
+\
+**SNR=5**
+
+{% include audio.liquid path="assets/audio/mixing_noise/signal_noise_SNR=5.wav" controls=true %}
+\
+**SNR=0**
+
+{% include audio.liquid path="assets/audio/mixing_noise/signal_noise_SNR=0.wav" controls=true %}
+\
+**SNR=-5**
+
+{% include audio.liquid path="assets/audio/mixing_noise/signal_noise_SNR=-5.wav" controls=true %}
+\
+**SNR=-10**
+
+{% include audio.liquid path="assets/audio/mixing_noise/signal_noise_SNR=-10.wav" controls=true %}
+\
+**SNR=-20**
+
+{% include audio.liquid path="assets/audio/mixing_noise/signal_noise_SNR=-20.wav" controls=true %}
+\
+**SNR=-30**
+
+{% include audio.liquid path="assets/audio/mixing_noise/signal_noise_SNR=-30.wav" controls=true %}
+
 
 
 We can see how the quality of the signal degrades with decreasing SNR.
-ppp
-
-
-
-

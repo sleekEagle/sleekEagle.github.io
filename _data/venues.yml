@@ -1,0 +1,23 @@
+# Badge colours (and optional links) for the venue abbreviations used in _bibliography/papers.bib
+"WACV":
+  url: https://wacv.thecvf.com/
+  color: "#1f5d9b"
+
+"AAAI":
+  url: https://aaai.org/
+  color: "#b5361d"
+
+"PRL":
+  color: "#2a7f62"
+
+"PerCom-W":
+  color: "#7a4fa3"
+
+"Smart Health":
+  color: "#c27c0e"
+
+"Wireless Health":
+  color: "#4a6670"
+
+"Preprint":
+  color: "#6b6b6b"

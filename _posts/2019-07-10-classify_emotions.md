@@ -1,8 +1,11 @@
 ---
 layout: post
-title: Classifying Emotions with Neural Networks
+title: Classifying emotions with neural networks
+date: 2019-07-10
+description: Building a neural network that recognises emotions from voice, using the RML dataset and openSMILE features.
+tags: [audio, machine-learning]
+categories: [articles]
 ---
-
 
 This articles provides how to implement a neural network based classifier to classify emotions from voice data. To explain, if some one is speaking through a microphone, a machine learning agent can listen to that speech and try to determine the emotional state of the person. Here, emotional state could mean various types of emotions such as happy, sad, surprise, anger...etc. The motivation for such a system could be numerous. One example would be a mobile robot roaming in a house and interacting with people. While hearing these people's voice and/or looking at their faces, this agent can try to determine the emotional state the person is at and then take actions according to that state. If the person is feeling sad, for example, the robot can choose to play a happy song to make the person feel better.
 
@@ -23,7 +26,7 @@ Then I built a deep neural network with Keras deep learning library for python. 
 This network uses a confidence prediction branch to predict the confidence of its own predictions. To know more details check out my article on neural networks with confidence estimation. 
 
 ## The network Structure
-![alt text](/images/classify_emotions/network.png)
+![alt text](/assets/img/classify_emotions/network.png)
 
 
 ## Results
@@ -38,17 +41,3 @@ fear | 0.17
 happy | 0.42
 sad | 0.61
 surprise | 0.90
-
-
-
-
-
-
-
-
-
-
-
-
-
-

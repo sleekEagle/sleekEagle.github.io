@@ -1,0 +1,5 @@
+# Co-authors whose names link to their pages in the publication list.
+# Keys are lowercase last names; firstname lists every spelling used in the .bib file.
+"stankovic":
+  - firstname: ["John", "J.", "John A.", "J. A."]
+    url: https://www.cs.virginia.edu/~stankovic/
