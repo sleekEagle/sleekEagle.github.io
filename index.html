@@ -1,0 +1,297 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Lahiru Wijayasingha </title> <meta name="author" content="Lahiru Wijayasingha"> <meta name="description" content="Lahiru Wijayasingha: computer vision and multimodal machine learning, plus writing, projects and half-baked ideas, rarely by the shortest route. "> <meta name="keywords" content="computer vision, multimodal learning, depth estimation, egocentric vision, machine learning, blog"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%A6%85&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://sleekeagle.github.io/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item active"> <a class="nav-link" href="/">about <span class="sr-only">(current)</span> </a> </li> <li class="nav-item "> <a class="nav-link" href="/blog/">writing </a> </li> <li class="nav-item "> <a class="nav-link" href="/thoughts/">thoughts </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="post"> <header class="post-header"> <h1 class="post-title"> <span class="font-weight-bold">Lahiru</span> Wijayasingha </h1> <p class="desc">Computer vision &amp; multimodal machine learning · PhD, University of Virginia</p> </header> <article> <div class="profile float-right"> <figure> <picture> <source class="responsive-img-srcset" srcset="/assets/img/prof_pic-480.webp 480w,/assets/img/prof_pic-800.webp 800w,/assets/img/prof_pic-1400.webp 1400w," type="image/webp" sizes="(min-width: 930px) 270.0px, (min-width: 576px) 30vw, 95vw"> <img src="/assets/img/prof_pic.jpg?v=7b9dc494b863e7ad54265eb4c1a9bf5b" class="img-fluid z-depth-1 rounded" width="100%" height="auto" alt="prof_pic.jpg" loading="eager" onerror="this.onerror=null; document.querySelectorAll('.responsive-img-srcset').forEach(function (n) { n.remove(); });"> </source></picture> </figure> <div class="more-info"> <p>Taking the long way up, with my hiking buddy.</p> </div> </div> <div class="clearfix"> <p>Hi, I’m Lahiru. I build machine learning systems that see, hear and sense the world: models for video, images, audio and wearable sensors.</p> <p>My research centres on <strong>computer vision and multimodal deep learning</strong>, especially monocular depth estimation, camera-independent 3D perception, and egocentric and wearable sensing. I’m most interested in where these meet people: healthcare, human activity recognition and assistive systems. Recently I’ve been working on <strong>explainable AI for video models</strong>, finding the smallest set of frames that actually drives a model’s decision.</p> <p>I did my PhD in Computer Science at the <a href="https://engineering.virginia.edu/departments/computer-science" rel="external nofollow noopener" target="_blank">University of Virginia</a>, an MS in Medical Robotics and Image Guided Intervention at Imperial College London, and a BSc in Mechanical Engineering at the University of Moratuwa, Sri Lanka. After that I was a research scholar at the University of Iowa, building multimodal models that combine echocardiogram video with clinical data.</p> <p>This site is where I keep my <a href="/cv/">CV</a>, <a href="/projects/">projects</a> and <a href="/publications/">papers</a>. It’s also where I <a href="/blog/">write</a> and jot down <a href="/thoughts/">stray thoughts</a>, usually by the scenic route.</p> </div> <h2> <a href="/blog/" style="color: inherit">latest posts</a> </h2> <div class="news"> <div class="table-responsive" style="max-height: 60vw"> <table class="table table-sm table-borderless"> <tr> <th scope="row" style="width: 20%">Dec 31, 2019</th> <td> <a class="news-title" href="/blog/2019/hide_emotions/">Hiding emotions in plain sight</a> </td> </tr> <tr> <th scope="row" style="width: 20%">Dec 20, 2019</th> <td> <a class="news-title" href="/blog/2019/social_navigation_of_a_mobile_robot/">Social navigation of a mobile robot</a> </td> </tr> <tr> <th scope="row" style="width: 20%">Dec 01, 2019</th> <td> <a class="news-title" href="/blog/2019/auto_ML/">Auto-ML with Auto-Keras</a> </td> </tr> </table> </div> </div> <h2> <a href="/publications/" style="color: inherit">selected publications</a> </h2> <div class="publications"> <ol class="bibliography"> <li> <div class="row"> <div class="col col-sm-2 abbr"> <abbr class="badge rounded w-100" style="background-color:#6b6b6b"> <div>Preprint</div> </abbr> </div> <div id="wijayasingha2026sufficient" class="col-sm-8"> <div class="title">Sufficient Frame Subsets for Video Understanding</div> <div class="author"> <em>Lahiru Wijayasingha</em> </div> <div class="periodical"> <em>In Under review at WACV 2027</em>, 2026 </div> <div class="periodical"> </div> <div class="links"> <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a> </div> <div class="abstract hidden"> <p>An explainable AI method for video classification models based on sufficient input subsets: it isolates the smallest set of input frames that drives a model’s decision.</p> </div> </div> </div> </li> <li> <div class="row"> <div class="col col-sm-2 abbr"> <abbr class="badge rounded w-100" style="background-color:#b5361d"> <a href="https://aaai.org/" rel="external nofollow noopener" target="_blank">AAAI</a> </abbr> </div> <div id="weerasinghe2026egoems" class="col-sm-8"> <div class="title">EgoEMS: A High-Fidelity Multimodal Egocentric Dataset for Cognitive Assistance in Emergency Medical Services</div> <div class="author"> Keshara Weerasinghe, Xueren Ge, Tessa Heick, and <span class="more-authors" title="click to view 5 more authors" onclick=" var element=this; element.setAttribute('title', ''); var more_authors_text=element.textContent == '5 more authors' ? 'Lahiru Nuwan Wijayasingha, Anthony Cortez, Abhishek Satpathy, John Stankovic, Homa Alemzadeh' : '5 more authors'; var cursorPosition=0; var textAdder=setInterval(function(){ element.innerHTML = more_authors_text.substring(0, cursorPosition + 1); if (++cursorPosition == more_authors_text.length){ clearInterval(textAdder); } }, '10'); ">5 more authors</span> </div> <div class="periodical"> <em>In Proceedings of the AAAI Conference on Artificial Intelligence</em>, 2026 </div> <div class="periodical"> </div> <div class="links"> <a href="https://doi.org/10.1609/aaai.v40i46.41293" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">DOI</a> <a href="http://arxiv.org/abs/2511.09894" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">arXiv</a> <a href="https://uva-dsa.github.io/EgoEMS/" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">Website</a> </div> </div> </div> </li> <li> <div class="row"> <div class="col col-sm-2 abbr"> <abbr class="badge rounded w-100" style="background-color:#1f5d9b"> <a href="https://wacv.thecvf.com/" rel="external nofollow noopener" target="_blank">WACV</a> </abbr> </div> <div id="wijayasingha2024camind" class="col-sm-8"> <div class="title">Camera-Independent Single Image Depth Estimation from Defocus Blur</div> <div class="author"> <em>Lahiru Wijayasingha</em>, Homa Alemzadeh, and <a href="https://www.cs.virginia.edu/~stankovic/" rel="external nofollow noopener" target="_blank">John A. Stankovic</a> </div> <div class="periodical"> <em>In Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)</em>, 2024 </div> <div class="periodical"> </div> <div class="links"> <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a> <a href="https://openaccess.thecvf.com/content/WACV2024/html/Wijayasingha_Camera-Independent_Single_Image_Depth_Estimation_From_Defocus_Blur_WACV_2024_paper.html" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">HTML</a> <a href="https://openaccess.thecvf.com/content/WACV2024/papers/Wijayasingha_Camera-Independent_Single_Image_Depth_Estimation_From_Defocus_Blur_WACV_2024_paper.pdf" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">PDF</a> <a href="https://github.com/sleekEagle/defocus_camind" class="btn btn-sm z-depth-0" role="button" rel="external nofollow noopener" target="_blank">Code</a> </div> <div class="abstract hidden"> <p>Monocular depth-from-defocus models are sensitive to the camera that captured the images. Using the optics of defocus blur, we show how camera parameters change the blur and propose a correction that makes a trained model work across cameras without retraining, evaluated on a new synthetic dataset, DDFF12 and NYU Depth V2.</p> </div> </div> </div> </li> </ol> </div> <div class="social"> <div class="contact-icons"> <a href="/assets/pdf/Lahiru_Wijayasingha_CV.pdf" title="Cv pdf"><i class="ai ai-cv"></i></a> <a href="mailto:xlahirunuwan@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a> <a href="https://github.com/sleekEagle" title="Github username" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-github"></i></a> <a href="https://www.linkedin.com/in/lahiru-nuwan" title="Linkedin username" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-linkedin"></i></a> <a href="https://medium.com/@lnw8px" title="Medium username" rel="external nofollow noopener" target="_blank"><i class="fa-brands fa-medium"></i></a> <a href="https://scholar.google.com/citations?user=FgBDGAIAAAAJ" title="Scholar userid" rel="external nofollow noopener" target="_blank"><i class="ai ai-google-scholar"></i></a> <a href="/feed.xml" title="Rss icon"><i class="fa-solid fa-square-rss"></i></a> </div> <div class="contact-note">Email is the best way to reach me. </div> </div> </article> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Lahiru Wijayasingha. The Long Way Around. Built with <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> and the <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "about",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-writing",
+          title: "writing",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
+        },{id: "nav-thoughts",
+          title: "thoughts",
+          description: "Crazy ideas, half-formed hunches and spontaneous thoughts. Unpolished on purpose.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/thoughts/";
+          },
+        },{id: "nav-projects",
+          title: "projects",
+          description: "Things I&#39;ve built, from research systems to side projects.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "Papers in reverse chronological order. The full list is also in my CV.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "The PDF version is one click away (icon on the right).",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "post-hiding-emotions-in-plain-sight",
+        
+          title: "Hiding emotions in plain sight",
+        
+        description: "Using adversarial perturbations to hide emotion from voice assistants while speech-to-text keeps working.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/hide_emotions/";
+          
+        },
+      },{id: "post-social-navigation-of-a-mobile-robot",
+        
+          title: "Social navigation of a mobile robot",
+        
+        description: "Planning robot paths through crowds with trajectory prediction and the social forces model.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/social_navigation_of_a_mobile_robot/";
+          
+        },
+      },{id: "post-auto-ml-with-auto-keras",
+        
+          title: "Auto-ML with Auto-Keras",
+        
+        description: "Letting Auto-Keras search for a CNN architecture, and how it compares with a hand-built one.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/auto_ML/";
+          
+        },
+      },{id: "post-classifying-emotions-with-neural-networks",
+        
+          title: "Classifying emotions with neural networks",
+        
+        description: "Building a neural network that recognises emotions from voice, using the RML dataset and openSMILE features.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/classify_emotions/";
+          
+        },
+      },{id: "post-effects-of-spectrogram-pre-processing-for-audio-classification",
+        
+          title: 'Effects of spectrogram pre-processing for audio classification <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "How spectrogram pre-processing choices change the accuracy of an audio emotion classifier, written up on Medium.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/using-cnn-to-classify-audio/effects-of-spectrogram-pre-processing-for-audio-classification-a551f3da5a46", "_blank");
+          
+        },
+      },{id: "post-adding-noise-to-audio-data",
+        
+          title: "Adding noise to audio data",
+        
+        description: "Mixing white and real-world noise into audio clips at a chosen SNR, with examples you can listen to.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/mixing_noise/";
+          
+        },
+      },{id: "post-value-functions",
+        
+          title: "Value functions",
+        
+        description: "Working through state and action value functions on a small grid world.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/value_functions/";
+          
+        },
+      },{id: "post-introduction-to-reinforcement-learning",
+        
+          title: "Introduction to reinforcement learning",
+        
+        description: "Notes on the basic ideas of reinforcement learning: agents, environments, rewards.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/intro_to_reinforcement_learning/";
+          
+        },
+      },{id: "post-fairy-rings",
+        
+          title: "Fairy rings",
+        
+        description: "Why mushrooms sometimes grow in near-perfect circles, and the folklore behind it.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/fairy_rings/";
+          
+        },
+      },{id: "post-hand-washing-motion-classification-with-a-smartwatch",
+        
+          title: 'Hand washing motion classification with a smartwatch <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "Classifying hand-washing and tooth-brushing motions from smartwatch sensors (my Imperial MS work), written up on LinkedIn.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://www.linkedin.com/pulse/hand-washing-motion-classification-smart-watch-lahiru-nuwan/", "_blank");
+          
+        },
+      },{id: "projects-camera-independent-depth-from-defocus",
+          title: 'Camera-independent depth from defocus',
+          description: "Single-image depth estimation from defocus blur that keeps working when you change the camera. WACV 2024.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/1_depth_from_defocus/";
+            },},{id: "projects-sufficient-frame-subsets-for-video-understanding",
+          title: 'Sufficient frame subsets for video understanding',
+          description: "Explaining video classifiers by finding the smallest set of frames that drives their decision.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/2_sufficient_frames/";
+            },},{id: "projects-multimodal-echocardiogram-classification",
+          title: 'Multimodal echocardiogram classification',
+          description: "Fusing echocardiogram video with clinical records to detect Takotsubo cardiomyopathy.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/3_echocardiogram/";
+            },},{id: "projects-egoems",
+          title: 'EgoEMS',
+          description: "A high-fidelity multimodal egocentric dataset for cognitive assistance in emergency medical services. AAAI 2026.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/4_egoems/";
+            },},{id: "projects-in-home-care-system-for-alzheimer-39-s",
+          title: 'In-home care system for Alzheimer&amp;#39;s',
+          description: "A real-time sensing and alerting system supporting people with Alzheimer&#39;s disease and their caregivers.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/5_alzheimers_care/";
+            },},{id: "projects-noise-robust-speech-emotion-recognition",
+          title: 'Noise-robust speech emotion recognition',
+          description: "CNNs and attention that keep recognising emotion from speech when the audio gets noisy. Smart Health 2021.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/6_noise_robust_emotion/";
+            },},{id: "projects-social-navigation-of-a-mobile-robot",
+          title: 'Social navigation of a mobile robot',
+          description: "Getting a robot through a crowd using trajectory prediction and social forces.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/7_social_robot/";
+            },},{id: "projects-hiding-emotions-from-voice-assistants",
+          title: 'Hiding emotions from voice assistants',
+          description: "Adversarial perturbations that hide emotion from a voice assistant without breaking speech-to-text.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/8_hide_emotions/";
+            },},{id: "projects-auto-ml-with-auto-keras",
+          title: 'Auto-ML with Auto-Keras',
+          description: "Letting neural architecture search design a CNN and comparing it with a hand-built one.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/9_autokeras/";
+            },},{id: "thoughts-the-long-way-around",
+          title: 'The Long Way Around',
+          description: "",
+          section: "Thoughts",handler: () => {
+              window.location.href = "/thoughts/2026/the-long-way-around/";
+            },},{
+        id: 'social-cv',
+        title: 'CV',
+        section: 'Socials',
+        handler: () => {
+          window.open("/assets/pdf/Lahiru_Wijayasingha_CV.pdf", "_blank");
+        },
+      },{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%78%6C%61%68%69%72%75%6E%75%77%61%6E@%67%6D%61%69%6C.%63%6F%6D", "_blank");
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/sleekEagle", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/lahiru-nuwan", "_blank");
+        },
+      },{
+        id: 'social-medium',
+        title: 'Medium',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://medium.com/@lnw8px", "_blank");
+        },
+      },{
+        id: 'social-scholar',
+        title: 'Google Scholar',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://scholar.google.com/citations?user=FgBDGAIAAAAJ", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>
