@@ -335,7 +335,7 @@ jekyll-archives:
       tags: "/blog/:type/:name/"
       categories: "/blog/:type/:name/"
 
-display_tags: ["machine-learning", "audio", "robotics", "reinforcement-learning", "nature"] # these tags will be displayed on the front page of your blog
+display_tags: ["machine-learning", "deep-learning", "audio", "robotics", "reinforcement-learning", "nature"] # these tags will be displayed on the front page of your blog
 display_categories: ["articles", "external"] # these categories will be displayed on the front page of your blog
 
 # -----------------------------------------------------------------------------
