@@ -1,0 +1,308 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Dropout right before max pooling | Lahiru Wijayasingha </title> <meta name="author" content="Lahiru Wijayasingha"> <meta name="description" content="Why dropout followed by max pooling makes training and evaluation disagree, a fix from Wu &amp; Gu (2015), and two toy experiments that test both."> <meta name="keywords" content="computer vision, multimodal learning, depth estimation, egocentric vision, machine learning, blog"> <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; media-src 'self' https:; frame-src 'self' https:; connect-src 'self' https:;"> <style>
+  :root {
+    --max-content-width: 930px;
+  }
+</style> <link rel="stylesheet" href="/assets/css/tailwind.css?v=50c64c15cbb9fd1ce6056fdb8bcb4b62"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.css" integrity="sha256-zTN0r+0OKaIv2xqeNNIYxNk0pWJ6+IqPGc1iDgVzWF0=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css" integrity="sha256-MVopmdyC2tYTiJ8wlktf0uh0v4NgT+vNdyVFepi7Q0c=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.5/css/academicons.min.css" integrity="sha256-SzrCOBJbGVFMahewkgjwnApaV2+av1DwMAA+/QGLyZw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scholar-icons@1.0.3/css/scholar-icons.css" integrity="sha256-VY3hHVj/hNX3fYG6wtbA6TcKJQl7+FthzGSyIB64klY=" crossorigin="anonymous"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?v=591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20100%20100%22&gt;&lt;text%20y=%22.9em%22%20font-size=%2290%22&gt;%F0%9F%A6%85&lt;/text&gt;&lt;/svg&gt;"> <link rel="stylesheet" href="/assets/css/main.css?v=3116ba77db9ee1581d05bb3e86fbf7f1"> <link rel="canonical" href="https://sleekeagle.github.io/blog/2026/dropout_maxpool/"> <script src="/assets/js/theme.js?v=5286c3e4c334d0ecb8fc0c40ff4fa7ec"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?v=5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>
+    initTheme();
+  </script> </head> <body class="fixed-top-nav "> <header> <nav id="navbar" class="navbar navbar-light navbar-expand-sm fixed-top" role="navigation"> <div class="container"> <a class="navbar-brand title font-weight-lighter" href="/"> <span class="font-weight-bold">Lahiru</span> Wijayasingha </a> <button class="navbar-toggler collapsed navbar-toggler-main" type="button" data-nav-toggle="navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar top-bar"></span> <span class="icon-bar middle-bar"></span> <span class="icon-bar bottom-bar"></span> </button> <div class="collapse navbar-collapse navbar-collapse-main" id="navbarNav"> <ul class="navbar-nav navbar-menu-list flex-nowrap"> <li class="nav-item "> <a class="nav-link" href="/">about </a> </li> <li class="nav-item active"> <a class="nav-link" href="/blog/">writing </a> </li> <li class="nav-item "> <a class="nav-link" href="/thoughts/">thoughts </a> </li> <li class="nav-item "> <a class="nav-link" href="/projects/">projects </a> </li> <li class="nav-item "> <a class="nav-link" href="/publications/">publications </a> </li> <li class="nav-item "> <a class="nav-link" href="/cv/">CV </a> </li> <li class="nav-item"> <button id="search-toggle" type="button" title="Search" aria-label="Open search"> <span class="nav-link">ctrl k <i class="fa-solid fa-magnifying-glass"></i></span> </button> </li> <li class="toggle-container"> <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme"> <i class="fa-half-sun-moon" id="light-toggle-system"></i> <i class="fa-solid fa-moon" id="light-toggle-dark"></i> <i class="fa-solid fa-sun" id="light-toggle-light"></i> </button> </li> </ul> </div> </div> </nav> <progress id="progress" value="0"> <div class="progress-container"> <span class="progress-bar"></span> </div> </progress> </header> <div class="container mt-5" role="main"> <div class="row"> <div class="col-sm-3"> <nav id="toc-sidebar" class="sticky-top toc toc-sidebar" aria-label="Table of contents" data-toc-collapse="expanded" data-toc-collapse-depth=""></nav> </div> <div class="col-sm-9"> <div class="post"> <header class="post-header"> <h1 class="post-title">Dropout right before max pooling</h1> <p class="post-meta"> Created on October 15, 2026 </p> <p class="post-tags"> <a href="/blog/2026"> <i class="fa-solid fa-calendar fa-sm"></i> 2026 </a>   ·   <a href="/blog/tag/machine-learning"> <i class="fa-solid fa-hashtag fa-sm"></i> machine-learning</a>   <a href="/blog/tag/deep-learning"> <i class="fa-solid fa-hashtag fa-sm"></i> deep-learning</a>   ·   <a href="/blog/category/articles"> <i class="fa-solid fa-tag fa-sm"></i> articles</a> </p> </header> <article class="post-content"> <div id="markdown-content"> <p>This report looks at what happens when a network applies dropout and then immediately max-pools the result. In short: the network behaves differently in training and in evaluation, and evaluation results can get much worse. The report explains why, describes a fix from the literature (Wu &amp; Gu, 2015), and tests both the problem and the fix on two toy models.</p> <h2 id="1-summary">1. Summary</h2> <ul> <li> <strong>Dropout before max pooling makes training and evaluation disagree.</strong> In training, the pool output is on average <strong>higher</strong> than the plain max that the pool gives in evaluation. The usual dropout scaling (×1/(1−q)) does not correct this. For equal values in a 2×2 window and q = 0.2, the training output is 1.248× the evaluation output.</li> <li> <strong>The reason:</strong> the scaling assumes a dropped unit becomes 0. After a max pool, a dropped unit is replaced by the next largest survivor instead. So dropping costs less than the scaling assumes, and the scaling overshoots.</li> <li> <strong>The fix (Wu &amp; Gu, 2015): weighted pooling at evaluation time.</strong> Sort each window and output a weighted sum of its values instead of the max. The weights are the chances that each value wins the max in training. This gives exactly the average training output. Training is not changed, nothing is learned, and an already trained model can use it.</li> <li> <strong>Toy results (q = 0.3):</strong> with plain max at evaluation, test error is about 30× (CNN) to 110× (dense) higher than without dropout, and predictions are about 30% off in scale. Weighted pooling, on the same trained weights, brings the error back to the no-dropout level in the CNN and close to it in the dense model.</li> <li> <strong>Practical advice:</strong> the simplest option is to not put dropout right before a max pool. If you do, use weighted pooling at evaluation.</li> </ul> <h2 id="2-background-why-dropout-needs-a-scaling-fix">2. Background: why dropout needs a scaling fix</h2> <p>Dropout with drop probability q sets each unit to 0 with probability q, independently, during training. At evaluation it is turned off.</p> <p>Take one unit with value 6 and q = 0.2:</p> <ul> <li> <strong>Training:</strong> kept 80% of the time (6), dropped 20% of the time (0). On average the next layer sees 0.8 × 6 = <strong>4.8</strong>.</li> <li> <strong>Evaluation:</strong> dropout is off, so the next layer always sees <strong>6</strong>.</li> </ul> <p>The next layer was trained on inputs that average 4.8, and now gets 6. There are two standard ways to fix this:</p> <table> <thead> <tr> <th>Version</th> <th>Training</th> <th>Evaluation</th> </tr> </thead> <tbody> <tr> <td>Original dropout (Hinton et al., 2012)</td> <td>kept values unchanged</td> <td>outputs × (1 − q)</td> </tr> <tr> <td>Inverted dropout (PyTorch’s <code class="language-plaintext highlighter-rouge">nn.Dropout</code>)</td> <td>kept values × 1/(1 − q)</td> <td>unchanged</td> </tr> </tbody> </table> <p>Both make <strong>the average training value of each unit equal its evaluation value</strong>. With inverted dropout, a kept 6 becomes 7.5, and 0.8 × 7.5 = 6.</p> <h3 id="when-this-per-unit-fix-is-enough">When this per-unit fix is enough</h3> <p>A conv or linear layer computes a weighted sum of its inputs. The average of a sum is always the sum of the averages. So if each input is right on average, the layer’s output is right on average too.</p> <p>A max pool is not a sum. The average of a max is <strong>not</strong> the max of the averages, so the per-unit fix does not carry over.</p> <p>Example with two units, 6 and 5, q = 0.2, inverted dropout:</p> <table> <thead> <tr> <th>Outcome</th> <th>Probability</th> <th>Unit A</th> <th>Unit B</th> <th>Sum A + B</th> <th>Max of A, B</th> </tr> </thead> <tbody> <tr> <td>both kept</td> <td>0.64</td> <td>7.5</td> <td>6.25</td> <td>13.75</td> <td>7.5</td> </tr> <tr> <td>only A kept</td> <td>0.16</td> <td>7.5</td> <td>0</td> <td>7.5</td> <td>7.5</td> </tr> <tr> <td>only B kept</td> <td>0.16</td> <td>0</td> <td>6.25</td> <td>6.25</td> <td>6.25</td> </tr> <tr> <td>both dropped</td> <td>0.04</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> </tr> <tr> <td><strong>training average</strong></td> <td> </td> <td><strong>6</strong></td> <td><strong>5</strong></td> <td><strong>11</strong></td> <td><strong>7.0</strong></td> </tr> <tr> <td><strong>evaluation value</strong></td> <td> </td> <td>6</td> <td>5</td> <td>11</td> <td>6</td> </tr> </tbody> </table> <ul> <li>Each unit on its own: matches.</li> <li>Sum: 11 in both. Matches.</li> <li>Max: 7.0 in training, 6 in evaluation. <strong>Does not match.</strong> </li> </ul> <h2 id="3-the-problem-in-detail">3. The problem in detail</h2> <h3 id="31-what-comes-out-of-the-pool-in-training">3.1 What comes out of the pool in training</h3> <p>Dropout runs as usual, then the max pool takes the largest value that survived. Take a 2×2 window [1, 6, 5, 3] with q = 0.2 (keep probability p = 0.8). With inverted dropout, every kept value is also multiplied by 1.25.</p> <table> <thead> <tr> <th>What happened</th> <th>Pool output</th> <th>Probability</th> <th>Output × probability</th> </tr> </thead> <tbody> <tr> <td>6 kept (others don’t matter)</td> <td>6 × 1.25 = 7.5</td> <td>0.8</td> <td>6.0</td> </tr> <tr> <td>6 dropped, 5 kept</td> <td>5 × 1.25 = 6.25</td> <td>0.2 × 0.8 = 0.16</td> <td>1.0</td> </tr> <tr> <td>6, 5 dropped, 3 kept</td> <td>3 × 1.25 = 3.75</td> <td>0.2² × 0.8 = 0.032</td> <td>0.12</td> </tr> <tr> <td>6, 5, 3 dropped, 1 kept</td> <td>1 × 1.25 = 1.25</td> <td>0.2³ × 0.8 = 0.0064</td> <td>0.008</td> </tr> <tr> <td>all dropped</td> <td>0</td> <td>0.2⁴ = 0.0016</td> <td>0</td> </tr> <tr> <td><strong>training average</strong></td> <td> </td> <td> </td> <td><strong>7.128</strong></td> </tr> </tbody> </table> <p>The probability column only depends on how many values in the window are <strong>larger</strong>. The largest value wins whenever it is kept, so its chance is just p. Each larger value that must be dropped multiplies the chance by q.</p> <p>The last column adds up to the average pool output in training. If you ran this window through dropout and the pool 10,000 times, about 8,000 outputs would be 7.5, about 1,600 would be 6.25, and so on. The mean of all 10,000 outputs is 7.128.</p> <h3 id="32-the-mismatch">3.2 The mismatch</h3> <ul> <li> <strong>Training:</strong> the next layer gets <strong>7.128</strong> on average from this window.</li> <li> <strong>Evaluation:</strong> dropout is off and the pool outputs the plain max, <strong>6</strong>.</li> </ul> <p>The ×1.25 boost was meant to make up for dropped values becoming 0. But when the 6 is dropped, the output does not become 0. It falls back to 5, which is still boosted. So the boost makes up for a loss that mostly does not happen.</p> <p>The gap is largest when the values in a window are about equal, which is common in smooth regions of a feature map. For four equal values a and q = 0.2, the training average is (1 + 0.2 + 0.04 + 0.008) · a = <strong>1.248 · a</strong>, while evaluation gives a.</p> <p>The gap grows with q, and it repeats at every dropout + pool stage in the network. How much it hurts depends on the task:</p> <ul> <li> <strong>Classification</strong> is fairly tolerant. A ReLU network scales roughly linearly, so scaling all activations up or down tends to scale all logits together, and the predicted class barely changes.</li> <li> <strong>Regression of absolute values</strong> is not tolerant. A scale error in the features becomes an error in the answer. Whether predictions go up or down depends on the signs of the later weights.</li> </ul> <h2 id="4-the-fix-wu--gu-2015">4. The fix: Wu &amp; Gu (2015)</h2> <p>Haibing Wu and Xiaodong Gu, <em>Towards Dropout Training for Convolutional Neural Networks</em>, Neural Networks 71 (2015). arXiv: <a href="https://arxiv.org/abs/1512.00242" rel="external nofollow noopener" target="_blank">1512.00242</a>.</p> <h3 id="41-main-points-of-the-paper">4.1 Main points of the paper</h3> <ol> <li> <strong>Max-pooling dropout is random selection.</strong> The paper does not change dropout. It shows that, seen from the pool output, dropout followed by max pooling is the same as picking one value from each window at random. For sorted values a₁ ≤ … ≤ aₙ, value aᵢ is picked with probability pᵢ = p · q^(n−i), and 0 with probability qⁿ. The largest value is most likely, but weaker values sometimes win.</li> <li> <strong>This is a useful regularizer.</strong> The network cannot depend on one strong activation per window. The paper places it between max pooling (always the top value) and average pooling (all values count equally). It also compares it with stochastic pooling (Zeiler &amp; Fergus, 2013), which picks the pool output at random too: max-pooling dropout with typical keep probabilities often beat stochastic pooling by a large margin.</li> <li> <strong>Evaluation should use probabilistic weighted pooling.</strong> The paper compares three rules for evaluation: <ul> <li>plain max pooling;</li> <li>scaled max pooling, p × max (the usual dropout correction applied to the pool output);</li> <li> <strong>probabilistic weighted pooling</strong>: Σᵢ pᵢ · aᵢ, the average training output.</li> </ul> </li> <li> <strong>Results on MNIST (their Fig. 4):</strong> weighted pooling has the lowest test error at every keep probability tested (0.2 to 0.8). With heavy dropout the other two rules do badly: at p = 0.2, about 0.95% (plain max) and 1.6% (scaled max) versus 0.55% (weighted). As p approaches 1 the three rules converge, and at p = 1 they are identical.</li> <li> <strong>Dropout placement:</strong> dropout on the input of conv layers helped, but often less than dropout before max pooling or before fully connected layers. The paper’s explanation is that conv layers share weights, have few parameters and overfit less.</li> </ol> <p>The paper uses original (non-inverted) dropout and ReLU activations. All experiments are classification on MNIST, CIFAR-10 and CIFAR-100, without data augmentation.</p> <h3 id="42-why-the-paper-fixes-evaluation-instead-of-moving-dropout">4.2 Why the paper fixes evaluation instead of moving dropout</h3> <p>Moving dropout after the pool gives what the paper calls convolutional dropout, which it found less effective. The authors wanted the regularization of max-pooling dropout, so they kept it and fixed the evaluation side instead.</p> <p>This was 2015, when batch normalization had just appeared and dropout was one of the main regularizers. Today CNNs are usually regularized with batch normalization, data augmentation and weight decay, and dropout inside conv blocks is less common.</p> <h3 id="43-weighted-pooling-with-inverted-dropout">4.3 Weighted pooling with inverted dropout</h3> <p>With inverted dropout (PyTorch), each winner is also multiplied by 1/p, so the weights become pᵢ / p = q^(n−i). For the window [1, 6, 5, 3] and q = 0.2:</p> <table> <thead> <tr> <th>Sorted value</th> <th>Chance it wins</th> <th>× 1/p</th> <th>Weight</th> </tr> </thead> <tbody> <tr> <td>6</td> <td>0.8</td> <td>× 1.25</td> <td>1</td> </tr> <tr> <td>5</td> <td>0.16</td> <td>× 1.25</td> <td>0.2</td> </tr> <tr> <td>3</td> <td>0.032</td> <td>× 1.25</td> <td>0.04</td> </tr> <tr> <td>1</td> <td>0.0064</td> <td>× 1.25</td> <td>0.008</td> </tr> </tbody> </table> <p>6 · 1 + 5 · 0.2 + 3 · 0.04 + 1 · 0.008 = <strong>7.128</strong>, the training average from section 3.1.</p> <table> <thead> <tr> <th> </th> <th>Dropout</th> <th>Pool</th> </tr> </thead> <tbody> <tr> <td>Training</td> <td>on</td> <td>normal max pool</td> </tr> <tr> <td>Evaluation</td> <td>off</td> <td>weighted pool</td> </tr> </tbody> </table> <p>Weighted pooling has no learnable parameters. The weights depend only on q. An existing model trained with dropout before max pooling can use it without retraining.</p> <h3 id="44-negative-activations">4.4 Negative activations</h3> <p>The paper assumes ReLU, so values are never negative. With activations that can be negative (for example LeakyReLU), a dropped unit (0) beats every negative value. A negative value can then only win if <strong>no</strong> unit in the window was dropped (probability pⁿ), and only when the whole window is negative. My implementation handles this:</p> <ul> <li>non-negative values: weights q^(n−i), as above;</li> <li>all-negative window: the max × p^(n−1);</li> <li>negative values in a mixed window: weight 0.</li> </ul> <h3 id="45-check-of-the-implementation">4.5 Check of the implementation</h3> <p>To check the formula, dropout followed by a 2×2 max pool was run 200,000 times on random inputs, with all-positive, mixed and all-negative windows. The average output was compared with the evaluation output:</p> <table> <thead> <tr> <th>q</th> <th>Weighted pooling error</th> <th>Plain max error</th> </tr> </thead> <tbody> <tr> <td>0.2</td> <td>0.004</td> <td>0.42</td> </tr> <tr> <td>0.5</td> <td>0.008</td> <td>1.20</td> </tr> </tbody> </table> <p>The weighted pooling errors are at the level of simulation noise.</p> <h3 id="46-a-limit">4.6 A limit</h3> <p>Weighted pooling is exact for one dropout + pool stage. Later layers still get noisy inputs in training and clean inputs in evaluation, and with non-linear layers in between this is not handled exactly. The same is true for ordinary dropout. The paper’s results, and the toys below, show the approximation works well.</p> <h2 id="5-toy-experiments">5. Toy experiments</h2> <p>Two small regression models, each trained in three variants:</p> <ul> <li> <strong>no dropout</strong>: plain max pooling;</li> <li> <strong>dropout → max pool</strong>: evaluated three ways (plain max, weighted pooling, and the average of 200 forward passes with dropout on, called “train-mode average”). The last one is the value the network was trained to give, so it shows the best that weighted pooling can do;</li> <li> <strong>max pool → dropout</strong>: the usual order, as a reference.</li> </ul> <p><strong>Setup:</strong></p> <ul> <li>dropout q = 0.3; Adam, learning rate 1e-3 with cosine decay, 4,000 steps; MSE loss; 3 seeds per variant;</li> <li>each training batch is newly generated data, so the models cannot overfit. Dropout then has nothing to fix, and any loss from it comes from the train/eval mismatch.</li> </ul> <p>Metrics: test MSE (mean ± std over seeds) and <strong>scale</strong> = mean prediction / mean target (1.0 = no bias).</p> <h3 id="51-dense-toy">5.1 Dense toy</h3> <p><strong>Input:</strong> 8 numbers, each from N(0, 1).</p> <p><strong>Target:</strong> y = 2 + sin(x·w₀) + 0.5·(x·w₁)² + 0.3·cos(3·x·w₂), with fixed random vectors w₀, w₁, w₂ (entries N(0, 1)/√8, drawn once). The +2 keeps y positive (mean about 2.5), so the scale is meaningful.</p> <p><strong>Model:</strong> Linear(8→256) → ReLU → [pool over groups of 4 units] → Linear(64→128) → ReLU → [pool over groups of 2] → Linear(64→1). “Max pooling” here takes the max over groups of hidden units.</p> <p><strong>Data:</strong> 256 new samples per step; test set of 20,000 fixed samples.</p> <table> <thead> <tr> <th>Model</th> <th>Evaluation pooling</th> <th>Test MSE</th> <th>Scale</th> </tr> </thead> <tbody> <tr> <td>no dropout</td> <td>plain max</td> <td>0.0081 ± 0.0018</td> <td>1.001</td> </tr> <tr> <td>dropout → max pool</td> <td>plain max</td> <td><strong>0.920 ± 0.065</strong></td> <td><strong>0.696</strong></td> </tr> <tr> <td>dropout → max pool</td> <td>weighted</td> <td>0.0260 ± 0.0094</td> <td>0.978</td> </tr> <tr> <td>dropout → max pool</td> <td>train-mode average</td> <td>0.0238 ± 0.0101</td> <td>0.997</td> </tr> <tr> <td>max pool → dropout</td> <td>plain max</td> <td>0.0943 ± 0.0085</td> <td>0.927</td> </tr> </tbody> </table> <h3 id="52-cnn-toy-estimating-blur">5.2 CNN toy: estimating blur</h3> <p><strong>Input:</strong> a 32×32 grayscale image, made in four steps:</p> <ol> <li>pick a blur σ uniformly between 0.5 and 3.0 px;</li> <li>make a 44×44 white-noise image (pixels uniform in [0, 1]);</li> <li>blur it with a 13×13 Gaussian kernel of that σ, keeping only positions where the kernel fits fully (32×32 output, no edge effects);</li> <li>add Gaussian noise with std 0.01.</li> </ol> <p><strong>Target:</strong> σ, one number. Small σ gives sharp, grainy texture, and large σ gives smooth blobs.</p> <p><strong>Model:</strong> two blocks of [conv 3×3 → ReLU → conv 3×3 → ReLU → pool 2×2] (16 and 32 channels), a third conv block without pooling (32 channels), global average pooling, Linear(32→1). Dropout is element-wise (<code class="language-plaintext highlighter-rouge">nn.Dropout</code>).</p> <p><strong>Data:</strong> 128 new images per step; test set of 4,000 fixed images.</p> <table> <thead> <tr> <th>Model</th> <th>Evaluation pooling</th> <th>Test MSE</th> <th>Scale</th> </tr> </thead> <tbody> <tr> <td>no dropout</td> <td>plain max</td> <td>0.0112 ± 0.0012</td> <td>0.999</td> </tr> <tr> <td>dropout → max pool</td> <td>plain max</td> <td><strong>0.341 ± 0.273</strong></td> <td><strong>0.718</strong></td> </tr> <tr> <td>dropout → max pool</td> <td>weighted</td> <td>0.0116 ± 0.0013</td> <td>0.996</td> </tr> <tr> <td>dropout → max pool</td> <td>train-mode average</td> <td>0.0115 ± 0.0014</td> <td>0.999</td> </tr> <tr> <td>max pool → dropout</td> <td>plain max</td> <td>0.0207 ± 0.0077</td> <td>0.955</td> </tr> </tbody> </table> <p>Two simplifications of the CNN toy:</p> <ul> <li>White noise has texture everywhere, so every pixel shows the blur. Real images have flat regions where blur cannot be seen, so this task is easier than real blur estimation.</li> <li>A 13×13 kernel reaches ±6 px, which is only 2σ at σ = 3. The largest blurs are slightly less blurred than their label. This is the same for all variants, so the comparison is fair.</li> </ul> <h2 id="6-conclusions-from-the-toys">6. Conclusions from the toys</h2> <ol> <li> <strong>Dropout right before max pooling, evaluated with plain max, is by far the worst variant.</strong> Test error is about 110× (dense) and 30× (CNN) higher than without dropout. Predictions are about 30% off in scale. In the CNN, the RMSE is about 0.58 px on blurs of 0.5–3 px, versus 0.11 px without dropout. The large spread over seeds (± 0.27) shows that how badly a model is hit is also unpredictable.</li> <li> <strong>The network itself is fine. Only evaluation is wrong.</strong> The same trained weights, averaged over dropout masks (train-mode average), are about as accurate as the no-dropout model in the CNN.</li> <li> <strong>Weighted pooling recovers almost all of it</strong> with no retraining. Its error matches the train-mode average (0.0116 vs 0.0115 in the CNN, 0.026 vs 0.024 in the dense model). So the formula computes the value the network was trained to give, in one pass instead of 200.</li> <li> <strong>In these toys the predictions go down (scale about 0.7), but the direction is not fixed.</strong> The pooled features are always larger in training than with plain max at evaluation. Whether that makes the final output larger or smaller depends on the signs of the later weights, so in other networks predictions can just as well come out too high.</li> <li> <strong>Dropout after the pool is a small cost here, not a fix.</strong> It is somewhat worse than no dropout, because ReLU layers sit between dropout and the output and the ×1/(1−q) scaling is only exact for sums. Its error is still 10–16× smaller than dropout before the pool with plain max.</li> <li> <strong>What the toys do not show:</strong> whether dropout before max pooling helps against overfitting. The data is unlimited, so there is no overfitting to reduce. Testing that needs a small fixed training set.</li> </ol> <h3 id="practical-advice">Practical advice</h3> <ul> <li>The simplest option: do not put dropout directly before a max pool. If regularization is needed, place dropout after the pool, use channel dropout (<code class="language-plaintext highlighter-rouge">Dropout2d</code>), or rely on other regularizers.</li> <li>If dropout before max pooling is wanted (for example for its regularizing effect), use weighted pooling at evaluation. It is a few lines of code, and models already trained this way can use it without retraining.</li> <li>A quick check for any network with dropout: compare the loss of the same batch in train mode (averaged over a few passes) and in eval mode. A large gap points to a train/eval mismatch like this one.</li> </ul> <h2 id="references">References</h2> <ul> <li>H. Wu, X. Gu. <em>Towards Dropout Training for Convolutional Neural Networks.</em> Neural Networks 71, 2015. <a href="https://arxiv.org/abs/1512.00242" rel="external nofollow noopener" target="_blank">arXiv:1512.00242</a> </li> <li>G. Hinton et al. <em>Improving neural networks by preventing co-adaptation of feature detectors.</em> arXiv:1207.0580, 2012.</li> <li>M. Zeiler, R. Fergus. <em>Stochastic Pooling for Regularization of Deep Convolutional Neural Networks.</em> ICLR 2013.</li> </ul> </div> </article> <br> <hr> <br> <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2> <p class="mb-2">Here are some more articles you might like to read next:</p> <ul class="list-disc pl-7 my-3 space-y-2 marker:text-[var(--global-theme-color)]"> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2019/hide_emotions/">Hiding emotions in plain sight</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2019/social_navigation_of_a_mobile_robot/">Social navigation of a mobile robot</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2019/auto_ML/">Auto-ML with Auto-Keras</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2019/classify_emotions/">Classifying emotions with neural networks</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://medium.com/using-cnn-to-classify-audio/effects-of-spectrogram-pre-processing-for-audio-classification-a551f3da5a46" target="_blank" rel="noopener noreferrer">Effects of spectrogram pre-processing for audio classification</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2019/mixing_noise/">Adding noise to audio data</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2019/value_functions/">Value functions</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2019/intro_to_reinforcement_learning/">Introduction to reinforcement learning</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="/blog/2019/fairy_rings/">Fairy rings</a> </li> <li class="leading-relaxed"> <a class="underline decoration-1 hover:text-[var(--global-hover-color)]" href="https://www.linkedin.com/pulse/hand-washing-motion-classification-smart-watch-lahiru-nuwan/" target="_blank" rel="noopener noreferrer">Hand washing motion classification with a smartwatch</a> <svg width="1rem" height="1rem" viewbox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path> </svg> </li> </ul> </div> </div> </div> </div> <footer class="fixed-bottom" role="contentinfo"> <div class="container mt-0"> © Copyright 2026 Lahiru Wijayasingha. The Long Way Around. Built with <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> and the <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. </div> </footer> <script>
+  window.alFolio = {
+    compatBootstrap: false
+  };
+</script> <script src="/assets/js/nav-toggle.js?v=141bd79a73ebc0f0b6ea58e440ae79fc"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js?v=e49affc7bd2646f6acdad1dbe02c2359" type="text/javascript"></script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script> <script src="/assets/al_math/js/mathjax-setup.js"></script> <script src="/assets/js/tooltips-setup.js?v=fe487e99db6c43751e6e7bdb2d6a0611"></script> <script defer src="https://cdn.jsdelivr.net/npm/tocbot@4.36.4/dist/tocbot.min.js" integrity="sha256-lo/r+jQ81wWrxdIiiiEEd538z4+dTJTt+leOuAS7GCw=" crossorigin="anonymous"></script> <script src="/assets/js/no_defer.js?v=53b1b1a645525975c963ce8bf8bfefcf"></script> <script defer src="/assets/js/common.js?v=87baac90f765f2f3362dcf6aaf312a8a"></script> <script defer src="/assets/js/copy_code.js?v=c8a01c11a92744d44b093fc3bda915df" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?v=896d254890d9b47f0281f63bfccf0dee"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/al_img_tools/js/zoom.js"></script> <script defer src="/assets/js/progress-bar.js?v=499464c5c63ced6cf7ad62509f1e2610" type="text/javascript"></script> <script src="https://cdn.jsdelivr.net/npm/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js" integrity="sha256-uMJJ3EoTyfRBoTbR+lrfu1uRQ87RZG8AR3cVNuQVeFg=" crossorigin="anonymous"></script> <script>
+    addBackToTop();
+  </script> <script type="module" src="/assets/al_search/js/search/ninja-keys.min.js"></script> <ninja-keys hidebreadcrumbs noautoloadmdicons placeholder="Type to start searching"></ninja-keys> <script src="/assets/al_search/js/search-setup.js"></script> <script>
+// get the ninja-keys element
+const ninja = document.querySelector('ninja-keys');
+
+// add the home and posts menu items
+ninja.data = [{
+    id: "nav-about",
+    title: "about",
+    section: "Navigation",
+    handler: () => {
+      window.location.href = "/";
+    },
+  },{id: "nav-writing",
+          title: "writing",
+          description: "",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/blog/";
+          },
+        },{id: "nav-thoughts",
+          title: "thoughts",
+          description: "Crazy ideas, half-formed hunches and spontaneous thoughts. Unpolished on purpose.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/thoughts/";
+          },
+        },{id: "nav-projects",
+          title: "projects",
+          description: "Things I&#39;ve built, from research systems to side projects.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/projects/";
+          },
+        },{id: "nav-publications",
+          title: "publications",
+          description: "Papers in reverse chronological order. The full list is also in my CV.",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/publications/";
+          },
+        },{id: "nav-cv",
+          title: "CV",
+          description: "The PDF version is one click away (icon on the right).",
+          section: "Navigation",
+          handler: () => {
+            window.location.href = "/cv/";
+          },
+        },{id: "post-dropout-right-before-max-pooling",
+        
+          title: "Dropout right before max pooling",
+        
+        description: "Why dropout followed by max pooling makes training and evaluation disagree, a fix from Wu &amp; Gu (2015), and two toy experiments that test both.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/dropout_maxpool/";
+          
+        },
+      },{id: "post-hiding-emotions-in-plain-sight",
+        
+          title: "Hiding emotions in plain sight",
+        
+        description: "Using adversarial perturbations to hide emotion from voice assistants while speech-to-text keeps working.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/hide_emotions/";
+          
+        },
+      },{id: "post-social-navigation-of-a-mobile-robot",
+        
+          title: "Social navigation of a mobile robot",
+        
+        description: "Planning robot paths through crowds with trajectory prediction and the social forces model.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/social_navigation_of_a_mobile_robot/";
+          
+        },
+      },{id: "post-auto-ml-with-auto-keras",
+        
+          title: "Auto-ML with Auto-Keras",
+        
+        description: "Letting Auto-Keras search for a CNN architecture, and how it compares with a hand-built one.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/auto_ML/";
+          
+        },
+      },{id: "post-classifying-emotions-with-neural-networks",
+        
+          title: "Classifying emotions with neural networks",
+        
+        description: "Building a neural network that recognises emotions from voice, using the RML dataset and openSMILE features.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/classify_emotions/";
+          
+        },
+      },{id: "post-effects-of-spectrogram-pre-processing-for-audio-classification",
+        
+          title: 'Effects of spectrogram pre-processing for audio classification <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "How spectrogram pre-processing choices change the accuracy of an audio emotion classifier, written up on Medium.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://medium.com/using-cnn-to-classify-audio/effects-of-spectrogram-pre-processing-for-audio-classification-a551f3da5a46", "_blank");
+          
+        },
+      },{id: "post-adding-noise-to-audio-data",
+        
+          title: "Adding noise to audio data",
+        
+        description: "Mixing white and real-world noise into audio clips at a chosen SNR, with examples you can listen to.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/mixing_noise/";
+          
+        },
+      },{id: "post-value-functions",
+        
+          title: "Value functions",
+        
+        description: "Working through state and action value functions on a small grid world.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/value_functions/";
+          
+        },
+      },{id: "post-introduction-to-reinforcement-learning",
+        
+          title: "Introduction to reinforcement learning",
+        
+        description: "Notes on the basic ideas of reinforcement learning: agents, environments, rewards.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/intro_to_reinforcement_learning/";
+          
+        },
+      },{id: "post-fairy-rings",
+        
+          title: "Fairy rings",
+        
+        description: "Why mushrooms sometimes grow in near-perfect circles, and the folklore behind it.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2019/fairy_rings/";
+          
+        },
+      },{id: "post-hand-washing-motion-classification-with-a-smartwatch",
+        
+          title: 'Hand washing motion classification with a smartwatch <svg width="1.2rem" height="1.2rem" top=".5rem" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><path d="M17 13.5v6H5v-12h6m3-3h6v6m0-6-9 9" class="icon_svg-stroke" stroke="#999" stroke-width="1.5" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"></path></svg>',
+        
+        description: "Classifying hand-washing and tooth-brushing motions from smartwatch sensors (my Imperial MS work), written up on LinkedIn.",
+        section: "Posts",
+        handler: () => {
+          
+            window.open("https://www.linkedin.com/pulse/hand-washing-motion-classification-smart-watch-lahiru-nuwan/", "_blank");
+          
+        },
+      },{id: "projects-camera-independent-depth-from-defocus",
+          title: 'Camera-independent depth from defocus',
+          description: "Single-image depth estimation from defocus blur that keeps working when you change the camera. WACV 2024.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/1_depth_from_defocus/";
+            },},{id: "projects-sufficient-frame-subsets-for-video-understanding",
+          title: 'Sufficient frame subsets for video understanding',
+          description: "Explaining video classifiers by finding the smallest set of frames that drives their decision.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/2_sufficient_frames/";
+            },},{id: "projects-multimodal-echocardiogram-classification",
+          title: 'Multimodal echocardiogram classification',
+          description: "Fusing echocardiogram video with clinical records to detect Takotsubo cardiomyopathy.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/3_echocardiogram/";
+            },},{id: "projects-egoems",
+          title: 'EgoEMS',
+          description: "A high-fidelity multimodal egocentric dataset for cognitive assistance in emergency medical services. AAAI 2026.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/4_egoems/";
+            },},{id: "projects-in-home-care-system-for-alzheimer-39-s",
+          title: 'In-home care system for Alzheimer&amp;#39;s',
+          description: "A real-time sensing and alerting system supporting people with Alzheimer&#39;s disease and their caregivers.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/5_alzheimers_care/";
+            },},{id: "projects-noise-robust-speech-emotion-recognition",
+          title: 'Noise-robust speech emotion recognition',
+          description: "CNNs and attention that keep recognising emotion from speech when the audio gets noisy. Smart Health 2021.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/6_noise_robust_emotion/";
+            },},{id: "projects-social-navigation-of-a-mobile-robot",
+          title: 'Social navigation of a mobile robot',
+          description: "Getting a robot through a crowd using trajectory prediction and social forces.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/7_social_robot/";
+            },},{id: "projects-hiding-emotions-from-voice-assistants",
+          title: 'Hiding emotions from voice assistants',
+          description: "Adversarial perturbations that hide emotion from a voice assistant without breaking speech-to-text.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/8_hide_emotions/";
+            },},{id: "projects-auto-ml-with-auto-keras",
+          title: 'Auto-ML with Auto-Keras',
+          description: "Letting neural architecture search design a CNN and comparing it with a hand-built one.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/9_autokeras/";
+            },},{id: "thoughts-the-long-way-around",
+          title: 'The Long Way Around',
+          description: "",
+          section: "Thoughts",handler: () => {
+              window.location.href = "/thoughts/2026/the-long-way-around/";
+            },},{
+        id: 'social-cv',
+        title: 'CV',
+        section: 'Socials',
+        handler: () => {
+          window.open("/assets/pdf/Lahiru_Wijayasingha_CV.pdf", "_blank");
+        },
+      },{
+        id: 'social-email',
+        title: 'email',
+        section: 'Socials',
+        handler: () => {
+          window.open("mailto:%78%6C%61%68%69%72%75%6E%75%77%61%6E@%67%6D%61%69%6C.%63%6F%6D", "_blank");
+        },
+      },{
+        id: 'social-github',
+        title: 'GitHub',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://github.com/sleekEagle", "_blank");
+        },
+      },{
+        id: 'social-linkedin',
+        title: 'LinkedIn',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://www.linkedin.com/in/lahiru-nuwan", "_blank");
+        },
+      },{
+        id: 'social-medium',
+        title: 'Medium',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://medium.com/@lnw8px", "_blank");
+        },
+      },{
+        id: 'social-scholar',
+        title: 'Google Scholar',
+        section: 'Socials',
+        handler: () => {
+          window.open("https://scholar.google.com/citations?user=FgBDGAIAAAAJ", "_blank");
+        },
+      },{
+        id: 'social-rss',
+        title: 'RSS Feed',
+        section: 'Socials',
+        handler: () => {
+          window.open("/feed.xml", "_blank");
+        },
+      },{
+      id: 'light-theme',
+      title: 'Change theme to light',
+      description: 'Change the theme of the site to Light',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("light");
+      },
+    },
+    {
+      id: 'dark-theme',
+      title: 'Change theme to dark',
+      description: 'Change the theme of the site to Dark',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("dark");
+      },
+    },
+    {
+      id: 'system-theme',
+      title: 'Use system default theme',
+      description: 'Change the theme of the site to System Default',
+      section: 'Theme',
+      handler: () => {
+        setThemeSetting("system");
+      },
+    },];
+
+</script> <script src="/assets/al_search/js/shortcut-key.js"></script> </body> </html>
