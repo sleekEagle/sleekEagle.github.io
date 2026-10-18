@@ -152,6 +152,12 @@ cv:
       - bullet: "**Volunteer, UVA Hospital gift shop (2018–2019).**"
 
     Awards:
+      - title: Outstanding Reviewer Award, CVPR 2026
+        date: 2026-06
+        awarder: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)
+        url: https://cvpr.thecvf.com/Conferences/2026/ProgramCommittee#outstanding-reviewer
+        summary: "Recognized for excellence in technical paper reviews. [Certificate](/assets/pdf/CVPR2026_outstanding_reviewer.pdf)"
+
       - title: University of Virginia Computer Science Fellowship
         date: 2017-08
         awarder: University of Virginia
