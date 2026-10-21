@@ -5,7 +5,6 @@ permalink: /projects/
 description: Things I've built, from research systems to side projects.
 nav: true
 nav_order: 3
-display_categories: [research, side projects]
 horizontal: false
 ---
 

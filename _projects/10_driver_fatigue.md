@@ -3,7 +3,7 @@ layout: page
 title: Driver fatigue detection system
 description: A low-cost PIC microcontroller system that spots drowsy driving from steering wheel motion. 2013.
 img: assets/img/driver_fatigue/circuit.jpg
-importance: 4
+importance: 11
 category: side projects
 ---
 
@@ -36,3 +36,5 @@ interrupts that the PIC16 family couldn't. Steering angle is sampled on a timer 
 For the demo, two potentiometers stand in for the steering angle sensor and the speedometer. A UART link through a
 TTL-to-USB converter lets a laptop tune the scaling factor and block count on the fly and log fatigue data, since the
 right thresholds vary from driver to driver.
+
+- Report: [Driver Fatigue Detection System (PDF)]({{ '/assets/pdf/driver_fatigue_detection_system_2013.pdf' | relative_url }})
