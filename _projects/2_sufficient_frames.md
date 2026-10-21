@@ -2,7 +2,7 @@
 layout: page
 title: Sufficient frame subsets for video understanding
 description: Explaining video classifiers by finding the smallest set of frames that drives their decision.
-importance: 2
+importance: 3
 category: research
 ---
 

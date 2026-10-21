@@ -2,7 +2,7 @@
 layout: page
 title: In-home care system for Alzheimer's
 description: A real-time sensing and alerting system supporting people with Alzheimer's disease and their caregivers.
-importance: 5
+importance: 6
 category: research
 ---
 

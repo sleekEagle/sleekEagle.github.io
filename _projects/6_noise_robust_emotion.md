@@ -2,7 +2,7 @@
 layout: page
 title: Noise-robust speech emotion recognition
 description: CNNs and attention that keep recognising emotion from speech when the audio gets noisy. Smart Health 2021.
-importance: 6
+importance: 7
 category: research
 ---
 

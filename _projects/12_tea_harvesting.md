@@ -3,7 +3,7 @@ layout: page
 title: Selective tea harvesting
 description: A purely mechanical attachment that lets an existing tea harvester pick mature shoots and spare the young ones. 2014.
 img: assets/img/tea_harvesting/collage.jpg
-importance: 10
+importance: 11
 category: research
 ---
 

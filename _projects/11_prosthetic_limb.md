@@ -3,7 +3,7 @@ layout: page
 title: 3DOF transtibial robotic prosthetic limb
 description: A below-knee robotic prosthesis with a three-degree-of-freedom ankle, spring-based energy recovery and EMG control. ICIAfS 2014.
 img: assets/img/prosthetic_limb/prototype.jpg
-importance: 9
+importance: 10
 category: research
 ---
 

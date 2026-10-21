@@ -2,7 +2,7 @@
 layout: page
 title: Multimodal echocardiogram classification
 description: Fusing echocardiogram video with clinical records to detect Takotsubo cardiomyopathy.
-importance: 3
+importance: 4
 category: research
 ---
 

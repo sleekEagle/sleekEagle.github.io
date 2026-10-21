@@ -3,7 +3,7 @@ layout: page
 title: Hand-tracked ultrasound simulator
 description: Early work on a fetal ultrasound simulator that slices a 3D mesh where a Leap Motion–tracked hand points.
 img: assets/img/ultrasound_sim/collage.jpg
-importance: 8
+importance: 9
 category: research
 ---
 

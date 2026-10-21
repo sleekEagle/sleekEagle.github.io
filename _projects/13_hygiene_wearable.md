@@ -3,7 +3,7 @@ layout: page
 title: Smartwatch hygiene monitoring
 description: Recognising hand washing and tooth brushing from a smartwatch to support people with developmental disabilities. IEEE Wireless Health 2016.
 img: assets/img/hygiene_wearable/collage.jpg
-importance: 7
+importance: 8
 category: research
 ---
 
