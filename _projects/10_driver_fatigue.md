@@ -3,7 +3,7 @@ layout: page
 title: Driver fatigue detection system
 description: A low-cost PIC microcontroller system that spots drowsy driving from steering wheel motion. 2013.
 img: assets/img/driver_fatigue/circuit.jpg
-importance: 12
+importance: 14
 category: side projects
 ---
 

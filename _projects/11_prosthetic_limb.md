@@ -3,7 +3,7 @@ layout: page
 title: 3DOF transtibial robotic prosthetic limb
 description: A below-knee robotic prosthesis with a three-degree-of-freedom ankle, spring-based energy recovery and EMG control. ICIAfS 2014.
 img: assets/img/prosthetic_limb/prototype.jpg
-importance: 7
+importance: 9
 category: research
 ---
 
@@ -48,6 +48,8 @@ modelled this with a robotic tendon approach and swept the spring stiffness. At 
 In both experiments the prosthesis followed the natural limb. Abduction/adduction and inversion/eversion reached close
 to natural ranges. Dorsiflexion/plantarflexion reached 12°/32° against the natural 20°/50°, which is still enough for
 daily activities.
+
+- Demo video: [3DOF prosthetic limb on YouTube](https://www.youtube.com/watch?v=jit0trzElGw)
 
 **Papers**
 
